@@ -22,106 +22,33 @@ def rucksack_organization(file):
     Find the item type that appears in both compartments of each rucksack.
     What is the sum of the priorities of those item types?
     """
+    with open(file) as file:
+        rucksack = file.split('\n')
 
-    rucksack = file.split('\n')
-
-    # iterate through each line - cut line in half and find the common character in both halves
-    # if it's a lowercase character, assign it its value 1-26 depending on where it is in the alphabet
-    # if it's an uppercase character, assign it its value 27-52 depending on where it is in the alphabet (n + 26)
-    # when the end of the input list is reached, find the sum each line value
-    # a 1, b 2, c 3, d 4, e 5, f 6, g 7, h 8, i 9, j 10, k 11, l 12, m 13, n 14, o 15, p 16, q 17, r 18, s 19, t 20, u 21, v 22, w 23, x 24, y 25, z 26
-    # A 27, B 28, C 29, D 30, E 31, F 32, G 33, H 34, I 35, J 36, K 37, L 38, M 39, N 40, O 41, P 42, Q 43, R 44, S 45, T 46, U 47, V 48, W 49, X 50, Y 51, Z 52
     priority_count = 0
 
+    # create a dictionary with corresponding keys and values to prioritize
+    priorities = {}
+    letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    for i in range(len(letters)):
+        priorities[letters[i]] = i + 1
+
     for compartments in rucksack:
-        # divide rucksack in two
-        # if same character in both, find if it's upper or lowercase
-        # attach correct value
-        # continue
-        # sum(rucksack)
-
-        lowercase = {
-            'a': 1,
-            'b': 2,
-            'c': 3,
-            'd': 4,
-            'e': 5,
-            'f': 6,
-            'g': 7,
-            'h': 8,
-            'i': 9,
-            'j': 10,
-            'k': 11,
-            'l': 12,
-            'm': 13,
-            'n': 14,
-            'o': 15,
-            'p': 16,
-            'q': 17,
-            'r': 18,
-            's': 19,
-            't': 20,
-            'u': 21,
-            'v': 22,
-            'w': 23,
-            'x': 24,
-            'y': 25,
-            'z': 26
-        }
-        
-        uppercase = {
-            'A': 27,
-            'B': 28,
-            'C': 29,
-            'D': 30,
-            'E': 31,
-            'F': 32,
-            'G': 33,
-            'H': 34,
-            'I': 35,
-            'J': 36,
-            'K': 37,
-            'L': 38,
-            'M': 39,
-            'N': 40,
-            'O': 41,
-            'P': 42,
-            'Q': 43,
-            'R': 44,
-            'S': 45,
-            'T': 46,
-            'U': 47,
-            'V': 48,
-            'W': 49,
-            'X': 50,
-            'Y': 51,
-            'Z': 52
-        }
-
         length = len(compartments)
         middle_index = length//2
         compartment1 = compartments[:middle_index]
         compartment2 = compartments[middle_index:]
-        # print(compartment1)
-        # print(compartment2)
+
         for character in compartment1:
             if character in compartment2:
-                # print(character)
-                if character in lowercase:
-                    # add that value to += priority_count
-                # if character in uppercase:
-                    print('duplicate character!')
-                    # add that value to += priority_count
-                    continue
-            # sum(priority_count)
-            print(priority_count)
-        
+                priority_count += priorities[character]
+                break
+    print(priority_count)
+    return priority_count
 
-        # print(rucksack)
-
-if __name__ == "__main__":
-    file = Path(sys.argv[1])
-    if Path.is_file(file):
-        rucksack_organization(Path.read_text(file))
-    else:
-        raise TypeError("This is not a file")
+# if __name__ == "__main__":
+#     file = Path(sys.argv[1])
+#     if Path.is_file(file):
+#         rucksack_organization(Path.read_text(file))
+#     else:
+#         raise TypeError("This is not a file")
